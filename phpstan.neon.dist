@@ -7,5 +7,3 @@ parameters:
     excludePaths:
         analyse:
             - tests/Pest.php
-    peststan:
-        testCaseClass: IllumaLaw\HealthCheckStorage\Tests\TestCase
