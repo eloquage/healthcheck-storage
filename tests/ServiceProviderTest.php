@@ -2,24 +2,19 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Testing\PendingCommand;
+use IllumaLaw\HealthCheckStorage\HealthcheckStorageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-it('publishes the config file under the correct tag', function () {
-    $command = $this->artisan('vendor:publish', [
-        '--tag' => 'healthcheck-storage-config',
-        '--force' => true,
-    ]);
-
-    if ($command instanceof PendingCommand) {
-        $command->assertExitCode(0);
-    } else {
-        expect($command)->toBe(0);
+it('registers the config publish path under the correct tag', function () {
+    $provider = app()->getProvider(HealthcheckStorageServiceProvider::class);
+    if (! ($provider instanceof HealthcheckStorageServiceProvider)) {
+        throw new RuntimeException('The package service provider must be registered.');
     }
 
-    expect(config_path('healthcheck-storage.php'))->toBeFile();
+    $source = dirname(__DIR__).'/src/../config/healthcheck-storage.php';
 
-    File::delete(config_path('healthcheck-storage.php'));
+    expect(ServiceProvider::pathsToPublish($provider::class, 'healthcheck-storage-config'))
+        ->toBe([$source => config_path('healthcheck-storage.php')]);
 });
 
 it('loads config with the correct default', function () {
