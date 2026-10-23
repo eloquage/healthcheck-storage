@@ -2,24 +2,15 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Testing\PendingCommand;
+use IllumaLaw\HealthCheckStorage\HealthcheckStorageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-it('publishes the config file under the correct tag', function () {
-    $command = $this->artisan('vendor:publish', [
-        '--tag' => 'healthcheck-storage-config',
-        '--force' => true,
-    ]);
+it('registers the config publish path under the correct tag', function () {
+    $provider = app()->getProvider(IllumaLaw\HealthCheckStorage\HealthcheckStorageServiceProvider::class);
+    $source = dirname((new \ReflectionClass($provider))->getFileName()).'/../config/healthcheck-storage.php';
 
-    if ($command instanceof PendingCommand) {
-        $command->assertExitCode(0);
-    } else {
-        expect($command)->toBe(0);
-    }
-
-    expect(config_path('healthcheck-storage.php'))->toBeFile();
-
-    File::delete(config_path('healthcheck-storage.php'));
+    expect(ServiceProvider::pathsToPublish($provider::class, 'healthcheck-storage-config'))
+        ->toBe([$source => config_path('healthcheck-storage.php')]);
 });
 
 it('loads config with the correct default', function () {
