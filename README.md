@@ -1,5 +1,7 @@
 # Healthcheck storage for Laravel
 
+![Healthcheck Storage banner](art/banner.png)
+
 [![Tests](https://github.com/eloquage/healthcheck-storage/actions/workflows/run-tests.yml/badge.svg)](https://github.com/eloquage/healthcheck-storage/actions)
 [![Packagist License](https://img.shields.io/badge/Licence-MIT-blue)](http://choosealicense.com/licenses/mit/)
 [![Latest Stable Version](https://img.shields.io/packagist/v/illuma-law/healthcheck-storage?label=Version)](https://packagist.org/packages/illuma-law/healthcheck-storage)

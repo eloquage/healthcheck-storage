@@ -51,22 +51,39 @@ final class StorageDiskWritabilityCheck extends Check
 
             $path = 'health/.probe-'.uniqid('', true);
             $payload = 'ok';
+            $disk = null;
+            $probeSucceeded = false;
+            $cleanupSucceeded = false;
+            $started = microtime(true);
 
             try {
-                $started = microtime(true);
                 $disk = Storage::disk($diskName);
-                $disk->put($path, $payload);
 
-                if ($disk->get($path) !== $payload) {
+                if (! $disk->put($path, $payload)) {
+                    $errors[] = "{$diskName}: write failed";
+                } elseif ($disk->get($path) !== $payload) {
                     $errors[] = "{$diskName}: read mismatch";
-
-                    continue;
+                } else {
+                    $probeSucceeded = true;
                 }
-
-                $disk->delete($path);
-                $latencies[$diskName] = round((microtime(true) - $started) * 1000, 2);
             } catch (Throwable $e) {
                 $errors[] = "{$diskName}: ".$e->getMessage();
+            } finally {
+                if ($disk !== null) {
+                    try {
+                        if (! $disk->delete($path)) {
+                            $errors[] = "{$diskName}: probe file could not be deleted";
+                        } else {
+                            $cleanupSucceeded = true;
+                        }
+                    } catch (Throwable $e) {
+                        $errors[] = "{$diskName}: probe cleanup failed: ".$e->getMessage();
+                    }
+                }
+            }
+
+            if ($probeSucceeded && $cleanupSucceeded) {
+                $latencies[$diskName] = round((microtime(true) - $started) * 1000, 2);
             }
         }
 
