@@ -33,7 +33,11 @@ final class StorageDiskWritabilityCheck extends Check
         $errors = [];
 
         foreach ($disksToMonitor as $diskName) {
-            $diskName = trim((string) $diskName);
+            if (! is_string($diskName)) {
+                continue;
+            }
+
+            $diskName = trim($diskName);
 
             if ($diskName === '') {
                 continue;
