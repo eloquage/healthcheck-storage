@@ -3,12 +3,19 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Testing\PendingCommand;
 
 it('publishes the config file under the correct tag', function () {
-    $this->artisan('vendor:publish', [
+    $command = $this->artisan('vendor:publish', [
         '--tag' => 'healthcheck-storage-config',
         '--force' => true,
-    ])->assertExitCode(0);
+    ]);
+
+    if ($command instanceof PendingCommand) {
+        $command->assertExitCode(0);
+    } else {
+        expect($command)->toBe(0);
+    }
 
     expect(config_path('healthcheck-storage.php'))->toBeFile();
 

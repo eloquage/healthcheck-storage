@@ -1,5 +1,8 @@
 name: run-tests
 
+permissions:
+  contents: read
+
 on:
   push:
     paths:
@@ -16,6 +19,8 @@ on:
       - 'composer.json'
       - 'composer.lock'
 
+  workflow_dispatch:
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -28,7 +33,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.5, 8.4, 8.3]
+        php: [8.5, 8.4]
         laravel: [13.*]
         stability: [prefer-stable]
         include:
@@ -40,17 +45,15 @@ jobs:
             os: ubuntu-latest
             stability: prefer-stable
         exclude:
-          - php: 8.3
-            laravel: 13.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
