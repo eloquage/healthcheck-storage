@@ -4,3 +4,8 @@ parameters:
         - src
         - tests
     tmpDir: build/phpstan
+    excludePaths:
+        analyse:
+            - tests/Pest.php
+    peststan:
+        testCaseClass: IllumaLaw\HealthCheckStorage\Tests\TestCase
