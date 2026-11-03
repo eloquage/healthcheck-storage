@@ -1,5 +1,5 @@
 {
-    "name": "illuma-law/healthcheck-storage",
+    "name": "eloquage/healthcheck-storage",
     "description": "Focused storage health check for Spatie's Laravel Health package.",
     "keywords": [
         "illuma-law",

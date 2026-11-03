@@ -7,7 +7,7 @@ metadata:
 
 # Image generation
 
-Use for visual assets associated with `illuma-law/healthcheck-storage` (Focused storage health check for Spatie's Laravel Health package.), such as a README banner, concept illustration, or workflow diagram rendered as an image.
+Use for visual assets associated with `eloquage/healthcheck-storage` (Focused storage health check for Spatie's Laravel Health package.), such as a README banner, concept illustration, or workflow diagram rendered as an image.
 
 - First decide whether a visual helps. Prefer Markdown, Mermaid, or editable SVG for diagrams, logos, and interface-like graphics; use raster generation for illustrative or photographic assets.
 - Keep the image tied to the package's real purpose. Do not invent features, UI screens, logos, endorsements, or brand elements. Use user-provided brand assets when available.
