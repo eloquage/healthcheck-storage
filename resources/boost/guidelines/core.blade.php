@@ -1,4 +1,4 @@
-# illuma-law/healthcheck-storage
+# eloquage/healthcheck-storage
 
 Checks if the `vector` extension (storage) is enabled and active in PostgreSQL.
 

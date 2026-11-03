@@ -7,8 +7,8 @@ writes, reads, and deletes a small probe file on each configured Laravel
 disk.
 
 [![Tests](https://github.com/eloquage/healthcheck-storage/actions/workflows/run-tests.yml/badge.svg)](https://github.com/eloquage/healthcheck-storage/actions/workflows/run-tests.yml)
-[![Latest Version](https://img.shields.io/packagist/v/illuma-law/healthcheck-storage)](https://packagist.org/packages/illuma-law/healthcheck-storage)
-[![License](https://img.shields.io/packagist/l/illuma-law/healthcheck-storage)](LICENSE.md)
+[![Latest Version](https://img.shields.io/packagist/v/eloquage/healthcheck-storage)](https://packagist.org/packages/eloquage/healthcheck-storage)
+[![License](https://img.shields.io/packagist/l/eloquage/healthcheck-storage)](LICENSE.md)
 
 ## Requirements
 
@@ -19,7 +19,7 @@ disk.
 ## Install
 
 ```bash
-composer require illuma-law/healthcheck-storage
+composer require eloquage/healthcheck-storage
 ```
 
 Register the check with your other health checks:
